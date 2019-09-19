@@ -13,3 +13,16 @@ services:
       - '3306:3306'
     volumes:
       - ./tmp:/var/lib/mysql
+
+  db_test: 
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'blog_system_test'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_USER: 'user_test'
+      MYSQL_PASSWORD: 'password'
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./tmp:/var/lib/mysql

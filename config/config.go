@@ -15,6 +15,11 @@ type Config struct {
 		ReadTimeout  int    `envconfig:"SERVER_READ_TIMEOUT" default:"300"`
 		WriteTimeout int    `envconfig:"SERVER_WRITE_TIMEOUT" default:"300"`
 	}
+	Database struct {
+		Name     string `envconfig:"DB_NAME" required:"true"`
+		User     string `envconfig:"DB_USER" required:"true"`
+		Password string `envconfig:"DB_PASS" required:"true"`
+	}
 	// Version string    `envconfig:"VERSION" required:"true"`
 	Uptime time.Time `ignored:"true"`
 	// BuildDate time.Time `envconfig:"BUILD_DATE" default:"2006-01-02T15:04:05Z"`
