@@ -10,3 +10,12 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# vim stuffs
+*.swo
+*.swp
+
+# environment variables 
+.env
+.env.development
+.env.production
