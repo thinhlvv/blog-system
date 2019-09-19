@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -11,6 +12,9 @@ import (
 
 func main() {
 	cfg := config.New()
+
+	db := config.MustInitDB(cfg)
+	fmt.Println(db)
 
 	e := echo.New()
 
