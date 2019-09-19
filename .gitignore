@@ -19,3 +19,6 @@
 .env
 .env.development
 .env.production
+
+# temp file db
+tmp
