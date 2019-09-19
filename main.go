@@ -6,12 +6,21 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/thinhlvv/blog-system/config"
+	"github.com/thinhlvv/blog-system/handler/article"
 )
 
 func main() {
 	cfg := config.New()
 
 	e := echo.New()
+
+	// Setup router.
+	{
+		ctrl := article.New()
+		e.POST("/articles", ctrl.Create)
+		e.GET("/articles/:id", ctrl.GetByID)
+		e.GET("/articles", ctrl.GetAll)
+	}
 
 	s := &http.Server{
 		Addr:         cfg.Server.Port,
