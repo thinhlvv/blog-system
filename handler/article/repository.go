@@ -61,7 +61,6 @@ func (repo *repoImpl) GetArticleByID(id string) (*Article, error) {
 		&art.Content,
 		&art.Author,
 	)
-	fmt.Println(art)
 
 	return &art, err
 }

@@ -21,9 +21,13 @@ type Config struct {
 		Password string `envconfig:"DB_PASS" required:"true"`
 		Host     string `envconfig:"DB_HOST"`
 	}
-	// Version string    `envconfig:"VERSION" required:"true"`
+	MysqlTest struct {
+		Name     string `envconfig:"DB_TEST_NAME" required:"true"`
+		User     string `envconfig:"DB_TEST_USER" required:"true"`
+		Password string `envconfig:"DB_TEST_PASS" required:"true"`
+		Host     string `envconfig:"DB_TEST_HOST"`
+	}
 	Uptime time.Time `ignored:"true"`
-	// BuildDate time.Time `envconfig:"BUILD_DATE" default:"2006-01-02T15:04:05Z"`
 }
 
 // New initialises a new configuration.

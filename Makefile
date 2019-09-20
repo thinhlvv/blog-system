@@ -34,7 +34,7 @@ rollback: # Rollback to previous migration.
 	@goose -dir migrations mysql "${DB_USER}:${DB_PASS}@tcp(${DB_HOST})/${DB_NAME}" down
 
 test: # Run the test.
-	@go test -bench=. -v ./...
+	@go test -cover -bench=. -v ./...
 
 clean: # Clear the MySQL tmp/ directory.
 	@rm -rf tmp
