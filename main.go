@@ -14,6 +14,10 @@ func main() {
 	cfg := config.New()
 
 	db := config.MustInitDB(cfg)
+	defer db.Close()
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(5)
+	db.SetConnMaxLifetime(time.Hour)
 	fmt.Println(db)
 
 	e := echo.New()
