@@ -1,13 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/labstack/echo"
 	"github.com/thinhlvv/blog-system/config"
 	"github.com/thinhlvv/blog-system/handler/article"
+	"github.com/thinhlvv/blog-system/model"
+	"github.com/thinhlvv/blog-system/pkg"
 )
 
 func main() {
@@ -18,13 +19,17 @@ func main() {
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(5)
 	db.SetConnMaxLifetime(time.Hour)
-	fmt.Println(db)
+
+	app := model.App{
+		DB:               db,
+		RequestValidator: pkg.NewRequestValidator(),
+	}
 
 	e := echo.New()
 
 	// Setup router.
 	{
-		ctrl := article.New(db)
+		ctrl := article.New(app)
 		e.POST("/articles", ctrl.Create)
 		e.GET("/articles/:id", ctrl.GetByID)
 		e.GET("/articles", ctrl.GetAll)

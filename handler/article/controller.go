@@ -5,16 +5,21 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/thinhlvv/blog-system/model"
+	"github.com/thinhlvv/blog-system/pkg"
 )
 
 // Controller represents handler functions.
 type Controller struct {
-	service Service
+	service   Service
+	validator pkg.RequestValidator
 }
 
 // NewController returns controller endpoints.
-func NewController(service Service) *Controller {
-	return &Controller{service: service}
+func NewController(service Service, app model.App) *Controller {
+	return &Controller{
+		service:   service,
+		validator: app.RequestValidator,
+	}
 }
 
 // GetByID return Article by ID.
@@ -29,9 +34,9 @@ func (ctrl Controller) GetAll(c echo.Context) error {
 
 type (
 	createReq struct {
-		Title   string `json:"title"`
-		Content string `json:"content"`
-		Author  string `json:"author"`
+		Title   string `json:"title" validate:"max=255,min=1"`
+		Content string `json:"content" validate:"min=1"`
+		Author  string `json:"author" validate:"max=255,min=1"`
 	}
 
 	createRes struct {
@@ -43,6 +48,14 @@ type (
 func (ctrl Controller) Create(c echo.Context) error {
 	var req createReq
 	if err := c.Bind(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, model.BaseResponse{
+			Status:  http.StatusBadRequest,
+			Message: err.Error(),
+			Data:    nil,
+		})
+	}
+
+	if err := ctrl.validator.ValidateStruct(req); err != nil {
 		return c.JSON(http.StatusBadRequest, model.BaseResponse{
 			Status:  http.StatusBadRequest,
 			Message: err.Error(),
