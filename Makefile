@@ -16,6 +16,11 @@ install: # use goose with github version
 	@GO111MODULE=on go mod tidy
 	@GO111MODULE=on go mod vendor
 
+new-migration:
+	@echo generating new migration on database: ${DB_NAME}
+	@echo format command should be make new-migrate name=init_user_table
+	@goose -dir migrations mysql "${DB_USER}:${DB_PASS}@tcp(${DB_HOST})/${DB_NAME}" create $(name) sql
+
 migrate: # Run the MySQL migration.
 	@echo operating on database: ${DB_NAME}
 	@goose -dir migrations mysql "${DB_USER}:${DB_PASS}@tcp(${DB_HOST})/${DB_NAME}" up
@@ -23,7 +28,6 @@ migrate: # Run the MySQL migration.
 migrate-dbtest: # Run the MySQL migration.
 	@echo operating on database: ${TEST_DB_NAME}
 	@goose -dir migrations mysql "${TEST_DB_USER}:${TEST_DB_PASS}@tcp(${TEST_DB_HOST})/${TEST_DB_NAME}" up
-
 
 rollback: # Rollback to previous migration.
 	@echo operating on database: ${DB_NAME}
