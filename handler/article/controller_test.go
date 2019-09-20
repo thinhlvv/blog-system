@@ -21,6 +21,12 @@ var articleJSON = `{
 	"author":"thinh test"
 }`
 
+var invalidArticleJSON = `{
+	"title": "",
+	"content": "content",
+	"author":"thinh test"
+}`
+
 func TestControllerCreateArticle(t *testing.T) {
 	// Setup
 	db := testhelper.NewDB()
@@ -41,6 +47,17 @@ func TestControllerCreateArticle(t *testing.T) {
 		err := handler.Create(c)
 		So(err, ShouldBeNil)
 		So(rec.Code, ShouldEqual, http.StatusCreated)
+	})
+
+	Convey("Controller Scenario: Create Article failed with invalid params", t, func() {
+		req := httptest.NewRequest(http.MethodPost, "/articles", strings.NewReader(invalidArticleJSON))
+		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+
+		err := handler.Create(c)
+		So(err, ShouldBeNil)
+		So(rec.Code, ShouldEqual, http.StatusBadRequest)
 	})
 
 	Convey("Controller Scenario: Get Article By ID successfully", t, func() {
