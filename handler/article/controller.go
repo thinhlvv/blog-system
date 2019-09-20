@@ -61,7 +61,27 @@ func (ctrl Controller) GetByID(c echo.Context) error {
 
 // GetAll return Article by ID.
 func (ctrl Controller) GetAll(c echo.Context) error {
-	return c.JSON(http.StatusOK, nil)
+	articles, err := ctrl.service.GetAllArticles()
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return c.JSON(http.StatusOK, model.BaseResponse{
+				Status:  http.StatusOK,
+				Message: err.Error(),
+				Data:    nil,
+			})
+		}
+		return c.JSON(http.StatusUnprocessableEntity, model.BaseResponse{
+			Status:  http.StatusUnprocessableEntity,
+			Message: err.Error(),
+			Data:    nil,
+		})
+	}
+
+	return c.JSON(http.StatusOK, model.BaseResponse{
+		Status:  http.StatusOK,
+		Message: "Success",
+		Data:    articles,
+	})
 }
 
 type (

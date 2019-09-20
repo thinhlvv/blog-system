@@ -73,8 +73,8 @@ func (repo *repoImpl) GetAllArticles() ([]Article, error) {
 			title,
 			content,
 			author
-		WHERE
-			deleted_at = NULL
+		FROM 
+			article
 	`
 	rows, err := repo.db.Query(stmt)
 	if err != nil {
