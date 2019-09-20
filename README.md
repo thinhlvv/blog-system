@@ -4,3 +4,61 @@
 [![Coverage Status](https://coveralls.io/repos/github/thinhlvv/blog-system/badge.svg?branch=master)](https://coveralls.io/github/thinhlvv/blog-system?branch=master)
 
 Backend serves APIs for blog system.
+
+## Commands
+
+```bash
+# Make copy of the environment for database in development.
+$ cp .env.sample .env.development
+
+# Make copy of the environment for database in staging.
+$ cp .env.sample .env.staging
+
+# Install all dependencies.
+$ make install
+
+# Start docker services.
+$ docker-compose up -d
+
+# Run migration files (locally), default is set to development.
+$ make migrate
+
+# Rollback migration version
+$ make rollback
+
+# Run migration files (on staging).
+$ make migrate ENV=staging
+
+# Run test.
+$ make test
+
+# Start the development server.
+$ make start
+
+# Cleanup local database.
+$ make clean
+```
+
+## Installation
+
+Go version : 1.12.6
+
+1. Run database for application and testing:
+```bash
+docker-compose up -d
+```
+
+Make sure you got two docker database:
+```bash
+docker ps 
+```
+
+2. Install dependencies:
+```bash
+make install
+```
+
+3. Start server
+```bash
+make start
+```
