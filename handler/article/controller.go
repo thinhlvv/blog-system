@@ -35,13 +35,32 @@ type (
 	}
 
 	createRes struct {
-		model.BaseResponse
+		ID int `json:"id"`
 	}
 )
 
 // Create return Article by ID.
 func (ctrl Controller) Create(c echo.Context) error {
-	// validate request
-	// service call
-	return c.JSON(http.StatusOK, nil)
+	var req createReq
+	if err := c.Bind(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, model.BaseResponse{
+			Status:  http.StatusBadRequest,
+			Message: err.Error(),
+			Data:    nil,
+		})
+	}
+
+	article, err := ctrl.service.CreateArticle(req)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, model.BaseResponse{
+			Status:  http.StatusUnprocessableEntity,
+			Message: err.Error(),
+			Data:    nil,
+		})
+	}
+	return c.JSON(http.StatusOK, model.BaseResponse{
+		Status:  http.StatusOK,
+		Message: "Success",
+		Data:    createRes{ID: article.ID},
+	})
 }

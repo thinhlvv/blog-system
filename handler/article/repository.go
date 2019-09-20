@@ -11,7 +11,7 @@ type (
 	Repository interface {
 		CreateArticle(art Article) (int, error)
 		GetArticleByID(id int) (*Article, error)
-		GetArticles() ([]Article, error)
+		GetAllArticles() ([]Article, error)
 	}
 
 	repoImpl struct {
@@ -27,10 +27,10 @@ func NewRepo(db *sql.DB) Repository {
 func (repo *repoImpl) CreateArticle(art Article) (int, error) {
 	stmt := fmt.Sprintf(`
 		INSERT INTO article (title, content, author)
-		VALUES (%s, %s, %s)
-	`, art.Title, art.Content, art.Author)
+		VALUES (?, ?, ?)
+	`)
 
-	res, err := repo.db.Exec(stmt)
+	res, err := repo.db.Exec(stmt, art.Title, art.Content, art.Author)
 	if err != nil {
 		return 0, err
 	}
@@ -69,7 +69,7 @@ func (repo *repoImpl) GetArticleByID(id int) (*Article, error) {
 	return &art, err
 }
 
-func (repo *repoImpl) GetArticles() ([]Article, error) {
+func (repo *repoImpl) GetAllArticles() ([]Article, error) {
 	stmt := `
 		SELECT 
 			id,

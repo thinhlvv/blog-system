@@ -19,6 +19,7 @@ type Config struct {
 		Name     string `envconfig:"DB_NAME" required:"true"`
 		User     string `envconfig:"DB_USER" required:"true"`
 		Password string `envconfig:"DB_PASS" required:"true"`
+		Host     string `envconfig:"DB_HOST"`
 	}
 	// Version string    `envconfig:"VERSION" required:"true"`
 	Uptime time.Time `ignored:"true"`

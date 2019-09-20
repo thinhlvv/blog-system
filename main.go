@@ -24,7 +24,7 @@ func main() {
 
 	// Setup router.
 	{
-		ctrl := article.New()
+		ctrl := article.New(db)
 		e.POST("/articles", ctrl.Create)
 		e.GET("/articles/:id", ctrl.GetByID)
 		e.GET("/articles", ctrl.GetAll)

@@ -18,6 +18,7 @@ func MustInitDB(cfg *Config) *sql.DB {
 		db, err = sql.Open("mysql", conStr(cfg))
 		if err != nil {
 			// retry 3 times with 3 seconds here
+			// ping
 			panic(err)
 		}
 	})
@@ -26,5 +27,9 @@ func MustInitDB(cfg *Config) *sql.DB {
 }
 
 func conStr(cfg *Config) string {
-	return fmt.Sprintf("%s:%s@/%s", cfg.Mysql.User, cfg.Mysql.Password, cfg.Mysql.Name)
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s",
+		cfg.Mysql.User,
+		cfg.Mysql.Password,
+		cfg.Mysql.Host,
+		cfg.Mysql.Name)
 }
