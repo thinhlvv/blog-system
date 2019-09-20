@@ -55,6 +55,18 @@ func TestControllerCreateArticle(t *testing.T) {
 		So(rec.Code, ShouldEqual, http.StatusOK)
 	})
 
+	Convey("Controller Scenario: Get Article By invalid ID", t, func() {
+		req := httptest.NewRequest(http.MethodGet, "/articles", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+		c.SetParamNames("id")
+		c.SetParamValues("a")
+
+		err := handler.GetByID(c)
+		So(err, ShouldBeNil)
+		So(rec.Code, ShouldEqual, http.StatusBadRequest)
+	})
+
 	Convey("Controller Scenario: Get Article By ID successfully", t, func() {
 		req := httptest.NewRequest(http.MethodGet, "/articles", nil)
 		rec := httptest.NewRecorder()
