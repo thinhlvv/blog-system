@@ -85,7 +85,8 @@ func (ctrl Controller) GetAll(c echo.Context) error {
 }
 
 type (
-	createReq struct {
+	// CreateReq is needed info to create Article.
+	CreateReq struct {
 		Title   string `json:"title" validate:"max=255,min=1"`
 		Content string `json:"content" validate:"min=1"`
 		Author  string `json:"author" validate:"max=255,min=1"`
@@ -98,7 +99,7 @@ type (
 
 // Create return Article by ID.
 func (ctrl Controller) Create(c echo.Context) error {
-	var req createReq
+	var req CreateReq
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, model.BaseResponse{
 			Status:  http.StatusBadRequest,

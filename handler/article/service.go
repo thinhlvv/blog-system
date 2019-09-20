@@ -3,7 +3,7 @@ package article
 type (
 	// Service is interface to interact with outside world.
 	Service interface {
-		CreateArticle(createReq) (*Article, error)
+		CreateArticle(CreateReq) (*Article, error)
 		GetAllArticles() ([]Article, error)
 		GetArticleByID(id string) (*Article, error)
 	}
@@ -19,7 +19,7 @@ func NewService(repo Repository) Service {
 }
 
 // CreateArticle ...
-func (s *serviceImpl) CreateArticle(req createReq) (*Article, error) {
+func (s *serviceImpl) CreateArticle(req CreateReq) (*Article, error) {
 	var art Article
 	art.Title = req.Title
 	art.Content = req.Content
