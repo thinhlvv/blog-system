@@ -5,8 +5,8 @@ jobs:
       - image: circleci/golang:1.12
       - image: circleci/mysql:8.0.0
         environment:
-          MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: blog_system_test
+          MYSQL_ROOT_PASSWORD: password
     working_directory: /go/src/github.com/thinhlvv/blog-system
     steps:
       - checkout # checkout working_directory
@@ -26,9 +26,9 @@ jobs:
           command: GO111MODULE=on make test
   
 workflows:
-  pal-communication-backend:
+  blog-system:
     jobs:
-      - test
+      - test:
         filters:
           branches:
             only: master
