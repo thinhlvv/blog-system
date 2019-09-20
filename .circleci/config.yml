@@ -28,7 +28,7 @@ jobs:
           name: run test
           command: |
             GO111MODULE=on make test
-            $GOPATH/bin/goveralls -coverprofile=/home/circleci/test/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
+            $GOPATH/bin/goveralls -coverprofile=/go/src/github.com/thinhlvv/blog-system/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
   
 workflows:
   blog-system:
