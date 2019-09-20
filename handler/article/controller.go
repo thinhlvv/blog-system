@@ -124,8 +124,8 @@ func (ctrl Controller) Create(c echo.Context) error {
 			Data:    nil,
 		})
 	}
-	return c.JSON(http.StatusOK, model.BaseResponse{
-		Status:  http.StatusOK,
+	return c.JSON(http.StatusCreated, model.BaseResponse{
+		Status:  http.StatusCreated,
 		Message: "Success",
 		Data:    createRes{ID: article.ID},
 	})

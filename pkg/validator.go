@@ -2,7 +2,7 @@ package pkg
 
 import "gopkg.in/go-playground/validator.v9"
 
-// RequestValidator decouple validator lib with our system.
+// RequestValidator decouples validator lib with our system.
 type (
 	RequestValidator interface {
 		ValidateStruct(str interface{}) error
