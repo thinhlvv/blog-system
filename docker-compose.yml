@@ -10,7 +10,7 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
     ports:
-      - '3306:3306'
+      - '6033:3306'
     volumes:
       - ./tmp/mysql:/var/lib/mysql
 
@@ -23,6 +23,6 @@ services:
       MYSQL_USER: 'user_test'
       MYSQL_PASSWORD: 'password'
     ports:
-      - '6033:3306'
+      - '3306:3306'
     volumes:
       - ./tmp/mysql_test:/var/lib/mysql
