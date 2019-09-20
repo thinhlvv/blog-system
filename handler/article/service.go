@@ -5,7 +5,7 @@ type (
 	Service interface {
 		CreateArticle(createReq) (*Article, error)
 		GetAllArticles() ([]Article, error)
-		GetArticleByID(id int) (*Article, error)
+		GetArticleByID(id string) (*Article, error)
 	}
 
 	serviceImpl struct {
@@ -40,6 +40,6 @@ func (s *serviceImpl) GetAllArticles() ([]Article, error) {
 }
 
 // GetArticleByID ...
-func (s *serviceImpl) GetArticleByID(id int) (*Article, error) {
+func (s *serviceImpl) GetArticleByID(id string) (*Article, error) {
 	return s.repo.GetArticleByID(id)
 }

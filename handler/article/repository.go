@@ -10,7 +10,7 @@ type (
 	// Repository is interface to interact with outside world.
 	Repository interface {
 		CreateArticle(art Article) (int, error)
-		GetArticleByID(id int) (*Article, error)
+		GetArticleByID(id string) (*Article, error)
 		GetAllArticles() ([]Article, error)
 	}
 
@@ -40,21 +40,19 @@ func (repo *repoImpl) CreateArticle(art Article) (int, error) {
 }
 
 // GetArticleByID ...
-func (repo *repoImpl) GetArticleByID(id int) (*Article, error) {
+func (repo *repoImpl) GetArticleByID(id string) (*Article, error) {
 	query := repo.db.QueryRow(`
 		SELECT 
 			id,
 			title,
 			content,
-			author,
-			created_at,
-			updated_at
+			author
+		FROM 
+			article 
 		WHERE
-			id = ? AND 
-			deleted_at = NULL
+			id = ? 
 		ORDER BY id
-		LIMIT 1
-	`)
+	`, id)
 
 	var art Article
 	err := query.Scan(
@@ -62,9 +60,8 @@ func (repo *repoImpl) GetArticleByID(id int) (*Article, error) {
 		&art.Title,
 		&art.Content,
 		&art.Author,
-		&art.CreatedAt,
-		&art.UpdatedAt,
 	)
+	fmt.Println(art)
 
 	return &art, err
 }
@@ -75,9 +72,7 @@ func (repo *repoImpl) GetAllArticles() ([]Article, error) {
 			id,
 			title,
 			content,
-			author,
-			created_at,
-			updated_at
+			author
 		WHERE
 			deleted_at = NULL
 	`
@@ -95,8 +90,6 @@ func (repo *repoImpl) GetAllArticles() ([]Article, error) {
 			&art.Title,
 			&art.Content,
 			&art.Author,
-			&art.CreatedAt,
-			&art.UpdatedAt,
 		)
 		if err != nil {
 			return nil, err
