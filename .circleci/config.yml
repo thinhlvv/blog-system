@@ -1,0 +1,34 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/golang:1.12
+      - image: circleci/mysql:8.0.0
+        environment:
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: 123456
+    working_directory: /go/src/github.com/thinhlvv/blog-system
+    steps:
+      - checkout # checkout working_directory
+      - run:
+          name: set up environment
+          command: |
+            cp .env.sample .env.development
+      - run:
+          name: install dependencies
+          command: |
+            make install 
+      - run:
+          name: run migrations
+          command: GO111MODULE=on make migrate-dbtest
+      - run:
+          name: run test
+          command: GO111MODULE=on make test
+  
+workflows:
+  pal-communication-backend:
+    jobs:
+      - test
+        filters:
+          branches:
+            only: master
