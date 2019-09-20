@@ -38,13 +38,6 @@ func (ctrl Controller) GetByID(c echo.Context) error {
 
 	article, err := ctrl.service.GetArticleByID(articleID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return c.JSON(http.StatusOK, model.BaseResponse{
-				Status:  http.StatusOK,
-				Message: err.Error(),
-				Data:    nil,
-			})
-		}
 		return c.JSON(http.StatusUnprocessableEntity, model.BaseResponse{
 			Status:  http.StatusUnprocessableEntity,
 			Message: err.Error(),

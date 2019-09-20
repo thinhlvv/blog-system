@@ -3,7 +3,9 @@ package config
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"sync"
+	"time"
 
 	// import init mysql
 	_ "github.com/go-sql-driver/mysql"
@@ -17,9 +19,17 @@ func MustInitDB(cfg *Config) *sql.DB {
 	doOnce.Do(func() {
 		db, err = sql.Open("mysql", conStr(cfg))
 		if err != nil {
-			// retry 3 times with 3 seconds here
-			// ping
-			panic(err)
+			log.Fatal(err)
+		}
+
+		// Ping to check connection
+		var connErr error
+		for i := 0; i < 3; i++ {
+			connErr = db.Ping()
+			if connErr != nil {
+				log.Fatal("Can not init database:", connErr)
+			}
+			time.Sleep(1 * time.Second)
 		}
 	})
 
