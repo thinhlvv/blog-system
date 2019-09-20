@@ -12,7 +12,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./tmp:/var/lib/mysql
+      - ./tmp/mysql:/var/lib/mysql
 
   db_test: 
     image: mysql:8.0
@@ -23,6 +23,6 @@ services:
       MYSQL_USER: 'user_test'
       MYSQL_PASSWORD: 'password'
     ports:
-      - '3307:3306'
+      - '6033:3306'
     volumes:
-      - ./tmp:/var/lib/mysql
+      - ./tmp/mysql_test:/var/lib/mysql
