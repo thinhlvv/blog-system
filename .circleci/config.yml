@@ -19,13 +19,16 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            GO111MODULE=off go get github.com/mattn/goveralls
             make install 
       - run:
           name: run migrations
           command: GO111MODULE=on make migrate-dbtest
       - run:
           name: run test
-          command: GO111MODULE=on make test
+          command: |
+            GO111MODULE=on make test
+            $GOPATH/bin/goveralls -coverprofile=/home/circleci/test/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
   
 workflows:
   blog-system:
