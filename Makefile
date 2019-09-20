@@ -26,8 +26,8 @@ migrate: # Run the MySQL migration.
 	@goose -dir migrations mysql "${DB_USER}:${DB_PASS}@tcp(${DB_HOST})/${DB_NAME}" up
 
 migrate-dbtest: # Run the MySQL migration.
-	@echo operating on database: ${TEST_DB_NAME}
-	@goose -dir migrations mysql "${TEST_DB_USER}:${TEST_DB_PASS}@tcp(${TEST_DB_HOST})/${TEST_DB_NAME}" up
+	@echo operating on database: ${DB_TEST_NAME}
+	@goose -dir migrations mysql "${DB_TEST_USER}:${DB_TEST_PASS}@tcp(${DB_TEST_HOST})/${DB_TEST_NAME}" up
 
 rollback: # Rollback to previous migration.
 	@echo operating on database: ${DB_NAME}

@@ -7,6 +7,8 @@ jobs:
         environment:
           MYSQL_DATABASE: blog_system_test
           MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: user_test
+          MYSQL_PASSWORD: password
     working_directory: /go/src/github.com/thinhlvv/blog-system
     steps:
       - checkout # checkout working_directory
