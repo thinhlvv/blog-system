@@ -58,7 +58,12 @@ docker ps
 make install
 ```
 
-3. Start server
+3. Migrate database:
+```bash
+make migrate
+```
+
+4. Start server
 ```bash
 make start
 ```
