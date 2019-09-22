@@ -63,6 +63,10 @@ make install
 make migrate
 ```
 
+Troubleshoot:
+
+`goose: command not found` - make sure you export $PATH=$GOPATH/bin
+
 4. Start server
 ```bash
 make start
