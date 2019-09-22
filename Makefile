@@ -11,7 +11,7 @@ start:
 	@GO111MODULE=on go run main.go
 
 install: # use goose with github version 
-	@go get github.com/pressly/goose/cmd/goose
+	@GO111MODULE=off go get github.com/pressly/goose/cmd/goose
 	@go get ./...
 	@GO111MODULE=on go mod tidy
 	@GO111MODULE=on go mod vendor
